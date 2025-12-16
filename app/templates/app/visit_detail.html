@@ -1,0 +1,27 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+<h1>Visit Detail</h1>
+
+<!-- Quick debug: makita lahat ng fields -->
+<pre>{{ visit|pprint }}</pre>
+
+<!-- Example display ng fields -->
+<p><strong>Visit ID:</strong> {{ visit.visit_id }}</p>
+
+<!-- Palitan ito ng tamang field names -->
+<p><strong>Patient:</strong> {{ visit.patient }}</p>
+<p><strong>Date:</strong> {{ visit.visit_date }}</p>
+<p><strong>Notes:</strong> {{ visit.notes }}</p>
+
+<!-- Kung may related Medical Records -->
+{% if visit.medicalrecord_set.all %}
+<h2>Medical Records</h2>
+<ul>
+    {% for record in visit.medicalrecord_set.all %}
+        <li>{{ record }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

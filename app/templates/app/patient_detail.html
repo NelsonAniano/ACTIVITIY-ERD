@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<h2>{{ patient.first_name }} {{ patient.last_name }}</h2>
+
+<p>Gender: {{ patient.gender }}</p>
+<p>Date of Birth: {{ patient.date_of_birth }}</p>
+<p>Contact: {{ patient.contact_no }}</p>
+
+<a href="{% url 'patient-edit' patient.pk %}">Edit</a>
+<a href="{% url 'patient-delete' patient.pk %}">Delete</a>
+
+{% endblock %}
