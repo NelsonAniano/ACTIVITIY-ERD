@@ -80,24 +80,16 @@ class Patient(models.Model):
 class Visit(models.Model):
     visit_id = models.AutoField(primary_key=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    visit_number = models.PositiveIntegerField(editable=False, null=True, blank=True)
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     visit_date = models.DateField()
     visit_type = models.CharField(max_length=50)
     reason = models.TextField()
     notes = models.TextField(blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        if not self.visit_number:
-            existing_numbers = Visit.objects.filter(patient=self.patient).values_list('visit_number',
-                                                                                      flat=True)
-            n = 1
-            while n in existing_numbers:
-                n += 1
-            self.visit_number = n
-        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"Visit {self.visit_number} - {self.patient}"
+        return f"Visit {self.visit_id} - {self.patient}"
 
 
 class MedicalRecord(models.Model):
