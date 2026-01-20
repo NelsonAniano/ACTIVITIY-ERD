@@ -1,27 +1,28 @@
 {% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Visit Detail{% endblock %}
+
 {% block content %}
+<section class="visit-detail-section">
+    <h2 class="section-title">Visit #{{ object.visit_id }}</h2>
 
-<h1>Visit Detail</h1>
+    <div class="visit-info">
+        <p><strong>Patient:</strong> {{ object.patient.first_name }} {{ object.patient.last_name }}</p>
+        <p><strong>Date:</strong> {{ object.visit_date }}</p>
+        <p><strong>Type:</strong> {{ object.visit_type }}</p>
+        <p><strong>Reason:</strong> {{ object.reason }}</p>
+        <p><strong>Notes:</strong> {{ object.notes }}</p>
+    </div>
 
-<!-- Quick debug: makita lahat ng fields -->
-<pre>{{ visit|pprint }}</pre>
-
-<!-- Example display ng fields -->
-<p><strong>Visit ID:</strong> {{ visit.visit_id }}</p>
-
-<!-- Palitan ito ng tamang field names -->
-<p><strong>Patient:</strong> {{ visit.patient }}</p>
-<p><strong>Date:</strong> {{ visit.visit_date }}</p>
-<p><strong>Notes:</strong> {{ visit.notes }}</p>
-
-<!-- Kung may related Medical Records -->
-{% if visit.medicalrecord_set.all %}
-<h2>Medical Records</h2>
-<ul>
-    {% for record in visit.medicalrecord_set.all %}
-        <li>{{ record }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-
+    {% if object.medicalrecord %}
+    <p>
+        <a href="{% url 'record-detail' object.medicalrecord.pk %}" class="record-link">
+            View Medical Record
+        </a>
+    </p>
+    {% else %}
+    <p>No medical record yet.</p>
+    {% endif %}
+</section>
 {% endblock %}

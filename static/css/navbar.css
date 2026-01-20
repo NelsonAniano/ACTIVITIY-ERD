@@ -1,0 +1,114 @@
+/* Navbar - Green Sidebar Style */
+.navbar {
+    background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%);
+    width: 210px;
+    min-height: 100vh;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.title-brand{
+    display: flex;
+}
+
+.brand-logo {
+    height: 25px;        /* adjust size ng logo */
+    width: auto;         /* keep aspect ratio */
+    vertical-align: middle; /* align with text */
+    margin-right: 10px;  /* space between logo and "Rural Health" */
+    position: absolute;
+    top: 22px;
+    left: 24px;
+}
+
+
+.nav-brand {
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 24px 20px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    display: block;
+    text-transform: uppercase;
+    position: relatve;
+    margin-left: 40px;
+}
+
+.nav-brand:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 2px 0;
+}
+
+.nav-link:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: white;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.15);
+    padding-left: 28px;
+}
+
+.nav-link:hover:before {
+    opacity: 1;
+}
+
+.nav-link.active {
+    background: rgba(255,255,255,0.2);
+    border-left: 4px solid white;
+}
+
+/* Adjust main container to account for sidebar */
+
+/* Icons for nav items (optional, kung gusto mo) */
+.nav-link:before {
+    content: '▸';
+    margin-right: 8px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.nav-link:hover:before {
+    opacity: 1;
+}

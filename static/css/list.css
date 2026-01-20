@@ -1,0 +1,344 @@
+/* List Pages Common Styles */
+.patient-list-section,
+.visit-list-section,
+.record-list-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 32px;
+}
+
+/* Section Header with Actions */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.section-title {
+    font-size: 32px;
+    color: #2c3e50;
+    font-weight: 600;
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-add,
+.btn-filter {
+    padding: 12px 24px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-add:hover {
+    background: #2980b9;
+}
+
+.btn-filter {
+    background: #95a5a6;
+}
+
+.btn-filter:hover {
+    background: #7f8c8d;
+}
+
+/* Search and Filter Bar */
+.filter-bar {
+    background: white;
+    padding: 20px 24px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #95a5a6;
+    font-size: 18px;
+}
+
+/* Table Container */
+.table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+/* Enhanced Table Styles */
+.patient-table,
+.visit-table,
+.record-table,
+.lab-table,
+.medication-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.patient-table thead,
+.visit-table thead,
+.record-table thead,
+.lab-table thead,
+.medication-table thead {
+    background: linear-gradient(180deg, #f8f9fa 0%, #f0f1f3 100%);
+}
+
+.patient-table thead tr th,
+.visit-table thead tr th,
+.record-table thead tr th,
+.lab-table thead tr th,
+.medication-table thead tr th {
+    padding: 18px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.patient-table tbody tr,
+.visit-table tbody tr,
+.record-table tbody tr,
+.lab-table tbody tr,
+.medication-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s;
+}
+
+.patient-table tbody tr:hover,
+.visit-table tbody tr:hover,
+.record-table tbody tr:hover {
+    background: #f8f9fa; /* optional, pwede ring transparent lang */
+    box-shadow: none; /* tanggalin ang box shadow */
+}
+
+.patient-table tbody tr td,
+.visit-table tbody tr td,
+.record-table tbody tr td,
+.lab-table tbody tr td,
+.medication-table tbody tr td {
+    padding: 18px 20px;
+    color: #2c3e50;
+    font-size: 15px;
+}
+
+.patient-table tbody tr:last-child,
+.visit-table tbody tr:last-child,
+.record-table tbody tr:last-child,
+.lab-table tbody tr:last-child,
+.medication-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* Table Links */
+.patient-table a,
+.visit-table a,
+.record-table a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+    position: relative;
+}
+
+
+.patient-table a:hover,
+.visit-table a:hover,
+.record-table a:hover {
+    color: #2980b9;
+}
+
+
+
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #95a5a6;
+}
+
+.empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state-text {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.completed {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+    padding: 20px;
+}
+
+.page-link {
+    padding: 10px 16px;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    color: #495057;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.page-link:hover {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.page-link.active {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* View Button */
+.btn-view {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white !important; /* make sure text is visible */
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(52, 152, 219, 0.4);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.btn-view:hover {
+    background-color: #2980b9;
+    box-shadow: 0 5px 12px rgba(41, 128, 185, 0.4);
+    transform: translateY(-2px);
+}
+
+.patient-table a.btn-view {
+    color: white;
+}
+
+
+/* Force all table links with btn-view to NOT have underline */
+.table a.btn-view,
+.patient-table a.btn-view,
+.visit-table a.btn-view,
+.record-table a.btn-view {
+    text-decoration: none !important; /* removes underline completely */
+}
+
+/* Optional: cursor pointer and smooth hover */
+.table a.btn-view:hover,
+.patient-table a.btn-view:hover,
+.visit-table a.btn-view:hover,
+.record-table a.btn-view:hover {
+    text-decoration: none !important;
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(41, 128, 185, 0.4);
+}
+
+/* If browser adds underline on focus */
+.table a.btn-view:focus,
+.patient-table a.btn-view:focus,
+.visit-table a.btn-view:focus,
+.record-table a.btn-view:focus {
+    outline: none;
+    text-decoration: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filter-bar {
+        flex-direction: column;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .patient-table,
+    .visit-table,
+    .record-table {
+        min-width: 600px;
+    }
+}

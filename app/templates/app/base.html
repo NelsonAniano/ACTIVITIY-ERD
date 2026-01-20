@@ -3,18 +3,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Website</title>
-   <link rel="icon" type="image/png" href="{% static 'images/bitmap.png' %}">
+    <title>{% block title %}Nelson EMR{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-{% include 'app/navbar.html' %}
+    {% include "app/navbar.html" %}
 
-{% block content %}
+    <div class="container">
 
-{% endblock content %}
+        {% if request.resolver_match.url_name != 'home_dashboard' %}
+        <div class="top-bar">
 
-<script src="{% static 'js/base.js' %}"></script>
+            <form method="get" class="global-search">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search..."
+                    value="{{ request.GET.q }}"
+                >
+                <button type="submit">Search</button>
+            </form>
+
+            {% if user.is_staff %}
+                <a href="/admin/" class="admin-shortcut">Admin</a>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+    </div>
+
 </body>
 </html>

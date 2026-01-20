@@ -1,0 +1,44 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Medical Records{% endblock %}
+{% block content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock %}
+
+<section class="record-list-section">
+    <h2 class="section-title">Medical Records</h2>
+    <table class="table record-table">
+        <thead>
+            <tr>
+                <th>Record ID</th>
+                <th>Patient</th>
+                <th>Diagnosis</th>
+                <th>Treatment</th>
+                <th>Next Follow-up</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>P{{ forloop.counter }}</td>
+                <td>{{ record.visit.patient.first_name }} {{ record.visit.patient.last_name }}</td>
+                <td>{{ record.diagnosis }}</td>
+                <td>{{ record.treatment }}</td>
+                <td>{{ record.next_followup_date }}</td>
+                <td>
+                    <a href="{% url 'record-detail' record.pk %}" class="btn-view">View</a>
+                </td>
+
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No medical records found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

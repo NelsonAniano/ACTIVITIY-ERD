@@ -1,13 +1,36 @@
-{% extends 'app/base.html' %}
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Patient Detail{% endblock %}
+
 {% block content %}
 
-<h2>{{ patient.first_name }} {{ patient.last_name }}</h2>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
 
-<p>Gender: {{ patient.gender }}</p>
-<p>Date of Birth: {{ patient.date_of_birth }}</p>
-<p>Contact: {{ patient.contact_no }}</p>
+<section class="patient-detail-section">
+    <h2 class="section-title">{{ object.first_name }} {{ object.last_name }}</h2>
 
-<a href="{% url 'patient-edit' patient.pk %}">Edit</a>
-<a href="{% url 'patient-delete' patient.pk %}">Delete</a>
+    <div class="patient-info">
+        <p><strong>Date of Birth:</strong> {{ object.date_of_birth }}</p>
+        <p><strong>Gender:</strong> {{ object.gender }}</p>
+        <p><strong>Contact:</strong> {{ object.contact_no }}</p>
+        <p><strong>Address:</strong> {{ object.address }}</p>
+        <p><strong>Emergency Contact:</strong> {{ object.emergency_contact }}</p>
+    </div>
 
+    <h3 class="sub-title">Visits</h3>
+    <ul class="visit-list">
+        {% for visit in object.visit_set.all %}
+        <li>
+            <a href="{% url 'visit-detail' visit.pk %}">
+                Visit #{{ visit.visit_id }} - {{ visit.visit_date }}
+            </a>
+        </li>
+        {% empty %}
+        <li>No visits yet.</li>
+        {% endfor %}
+    </ul>
+</section>
 {% endblock %}

@@ -1,156 +1,152 @@
-from django.views.generic import (
-    TemplateView,
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView
-)
-from django.urls import reverse_lazy
-
-from .models import (
-    User,
-    Patient,
-    Visit,
-    MedicalRecord,
-    LabResult,
-    Medication,
-    AuditLog
-)
+from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from django.views import View
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from .models import User, Patient, Visit, MedicalRecord
+from django.db.models import Q
 
 # =====================
-# HOME & ABOUT
+# PATIENTS (DISPLAY ONLY)
 # =====================
-
-class HomePageView(TemplateView):
-    template_name = "app/home.html"
-
-
-class AboutPageView(TemplateView):
-    template_name = "app/about.html"
-
-
-# =====================
-# USER VIEWS
-# =====================
-
-class UserListView(ListView):
-    model = User
-    template_name = "users/user_list.html"
-    context_object_name = "users"
-
-
-class UserCreateView(CreateView):
-    model = User
-    fields = "__all__"
-    template_name = "users/user_form.html"
-    success_url = reverse_lazy("user-list")
-
-
-class UserUpdateView(UpdateView):
-    model = User
-    fields = "__all__"
-    template_name = "users/user_form.html"
-    success_url = reverse_lazy("user-list")
-
-
-class UserDeleteView(DeleteView):
-    model = User
-    template_name = "confirm_delete.html"
-    success_url = reverse_lazy("user-list")
-
-
-# =====================
-# PATIENT VIEWS
-# =====================
-
-class PatientListView(ListView):
+class PatientListView(LoginRequiredMixin, ListView):
     model = Patient
     template_name = "app/patient_list.html"
     context_object_name = "patients"
 
+    def get_queryset(self):
+        queryset = Patient.objects.order_by("patient_id")
+        query = self.request.GET.get("q")
 
-class PatientDetailView(DetailView):
+        if query:
+            queryset = queryset.filter(
+                Q(first_name__icontains=query) |
+                Q(middle_name__icontains=query) |
+                Q(last_name__icontains=query) |
+                Q(contact_no__icontains=query)
+            )
+
+        return queryset
+
+
+
+class PatientDetailView(LoginRequiredMixin, DetailView):
     model = Patient
     template_name = "app/patient_detail.html"
 
 
-class PatientCreateView(CreateView):
-    model = Patient
-    fields = "__all__"
-    template_name = "app/patient_form.html"
-    success_url = reverse_lazy("patient-list")
-
-
-class PatientUpdateView(UpdateView):
-    model = Patient
-    fields = "__all__"
-    template_name = "app/patient_form.html"
-    success_url = reverse_lazy("patient-list")
-
-
-class PatientDeleteView(DeleteView):
-    model = Patient
-    template_name = "app/confirm_delete.html"
-    success_url = reverse_lazy("patient-list")
-
-
-
 # =====================
-# VISIT VIEWS
+# VISITS (DISPLAY ONLY)
 # =====================
-
-class VisitListView(ListView):
+class VisitListView(LoginRequiredMixin, ListView):
     model = Visit
     template_name = "app/visit_list.html"
     context_object_name = "visits"
 
+    def get_queryset(self):
+        queryset = Visit.objects.order_by("visit_id")
+        query = self.request.GET.get("q")
 
-class VisitDetailView(DetailView):
+        if query:
+            queryset = queryset.filter(
+                Q(patient__first_name__icontains=query) |
+                Q(patient__middle_name__icontains=query) |
+                Q(patient__last_name__icontains=query) |
+                Q(visit_type__icontains=query) |
+                Q(visit_date__icontains=query)
+            )
+
+        return queryset
+
+
+
+class VisitDetailView(LoginRequiredMixin, DetailView):
     model = Visit
     template_name = "app/visit_detail.html"
 
 
-class VisitCreateView(CreateView):
-    model = Visit
-    fields = "__all__"
-    template_name = "app/visit_form.html"
-    success_url = reverse_lazy("visit-list")
-
-
 # =====================
-# MEDICAL RECORD
+# MEDICAL RECORD (DISPLAY ONLY)
 # =====================
-
-class MedicalRecordDetailView(DetailView):
+class MedicalRecordListView(LoginRequiredMixin, ListView):
     model = MedicalRecord
-    template_name = "records/record_detail.html"
+    template_name = "app/record_list.html"
+    context_object_name = "records"
+
+    def get_queryset(self):
+        queryset = MedicalRecord.objects.order_by("record_id")
+        query = self.request.GET.get("q")
+
+        if query:
+            queryset = queryset.filter(
+                Q(diagnosis__icontains=query) |
+                Q(treatment__icontains=query) |
+                Q(visit__patient__first_name__icontains=query) |
+                Q(visit__patient__middle_name__icontains=query) |
+                Q(visit__patient__last_name__icontains=query)
+            )
+
+        return queryset
 
 
-class MedicalRecordCreateView(CreateView):
+
+class MedicalRecordDetailView(LoginRequiredMixin, DetailView):
     model = MedicalRecord
-    fields = "__all__"
-    template_name = "records/record_form.html"
-    success_url = reverse_lazy("visit-list")
+    template_name = "app/record_detail.html"
 
 
 # =====================
-# LAB RESULT
+# USERS (DISPLAY ONLY)
 # =====================
-
-class LabResultCreateView(CreateView):
-    model = LabResult
-    fields = "__all__"
-    template_name = "labs/lab_form.html"
-    success_url = reverse_lazy("visit-list")
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+    template_name = "app/user_list.html"
+    context_object_name = "users"
 
 
 # =====================
-# MEDICATION
+# AUTH
 # =====================
+class UserLoginView(View):
+    template_name = "app/login.html"
 
-class MedicationCreateView(CreateView):
-    model = Medication
-    fields = "__all__"
-    template_name = "medications/medication_form.html"
-    success_url = reverse_lazy("visit-list")
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Login successful!")
+            return redirect("patient-list")
+        else:
+            messages.error(request, "Invalid username or password")
+            return render(request, self.template_name)
+
+
+class UserLogoutView(View):
+    def get(self, request):
+        logout(request)
+        messages.info(request, "Logged out successfully.")
+        return redirect("login")
+
+
+class DashboardView(LoginRequiredMixin, View):
+    template_name = "app/dashboard.html"
+
+    def get(self, request):
+        total_patients = Patient.objects.count()
+        total_visits = Visit.objects.count()
+        total_records = MedicalRecord.objects.count()
+
+        context = {
+            "total_patients": total_patients,
+            "total_visits": total_visits,
+            "total_records": total_records,
+        }
+        return render(request, self.template_name, context)

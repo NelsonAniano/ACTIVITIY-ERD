@@ -1,6 +1,18 @@
-<header>
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'about' %}">About</a>
-    <a href="{% url 'patient-list' %}">Patients</a>
-    <a href="{% url 'visit-list' %}">Visits</a>
+{% load static %}
+<header class="navbar">
+    <div class="nav-container">
+        <div class="title-brand">
+            <img class="brand-logo" src="{% static 'images/folder.png' %}">
+            <a href="{% url 'patient-list' %}" class="nav-brand">Rural Health</a>
+        </div>
+        <nav class="nav-menu">
+            <a class="nav-link" href="{% url 'home_dashboard' %}">Dashboard</a>
+            <a class="nav-link" href="{% url 'patient-list' %}">Patients</a>
+            <a class="nav-link" href="{% url 'visit-list' %}">Visits</a>
+            <a class="nav-link" href="{% url 'record-list' %}">Records</a>
+
+
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </div>
 </header>

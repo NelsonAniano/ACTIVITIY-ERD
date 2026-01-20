@@ -1,19 +1,43 @@
 {% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Visits{% endblock %}
 
 {% block content %}
-<h1>Visits</h1>
 
-<a href="{% url 'visit-add' %}">+ Add Visit</a>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock %}
 
-<ul>
-    {% for visit in object_list %}
-        <li>
-            <a href="{% url 'visit-detail' visit.pk %}">
-                {{ visit.patient }} — {{ visit.visit_date }}
-            </a>
-        </li>
-    {% empty %}
-        <li>No visits found.</li>
-    {% endfor %}
-</ul>
+<section class="visit-list-section">
+    <h2 class="section-title">Visits</h2>
+    <table class="table visit-table">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Visit Date</th>
+                <th>Type</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for visit in visits %}
+            <tr>
+                <td>{{ visit.patient.first_name }} {{ visit.patient.last_name }}</td>
+
+                <td>{{ visit.visit_date }}</td>
+                <td>{{ visit.visit_type }}</td>
+                <td>
+                    <a href="{% url 'visit-detail' visit.pk %}" class="btn-view">
+                        Visit
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3">No visits found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
 {% endblock %}

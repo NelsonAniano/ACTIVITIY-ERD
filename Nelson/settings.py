@@ -107,3 +107,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR/ 'static']
+
+# settings.py
+LOGIN_URL = '/login/'       # Where to redirect if not logged in
+LOGIN_REDIRECT_URL = '/'    # After successful login
